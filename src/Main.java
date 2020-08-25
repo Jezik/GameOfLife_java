@@ -1,4 +1,3 @@
-import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -6,22 +5,13 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int size = scanner.nextInt();
         int seed = scanner.nextInt();
-        Random random = new Random(seed);
+        int steps = scanner.nextInt(); // Represents steps from the initial state of universe to output according to the task
 
-        boolean[][] universeMatrix = new boolean[size][size];
-        // Fill in the Universe matrix
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                universeMatrix[i][j] = random.nextBoolean();
-            }
+        Universe universe = new Universe(size, seed);
+        for (int i = 0; i < steps; i++) {
+            universe.setUniverseMatrix(Utility.createNextGeneration(universe.getUniverseMatrix()));
         }
 
-        // Print the current Universe
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                System.out.print(universeMatrix[i][j] ? 'O' : ' ');
-            }
-            System.out.print('\n');
-        }
+        System.out.print(universe.toString());
     }
 }
