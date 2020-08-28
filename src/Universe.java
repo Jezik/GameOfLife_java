@@ -4,14 +4,18 @@ import java.lang.StringBuilder;
 public class Universe {
     private boolean[][] universeMatrix;
     private final int sizeOfUniverse;
+    private int numberOfAliveCells = 0;
 
-    Universe(int sizeOfUniverse, long seed) {
-        Random random = new Random(seed);
+    Universe(int sizeOfUniverse) {
+        Random random = new Random();
         this.sizeOfUniverse = sizeOfUniverse;
         this.universeMatrix = new boolean[sizeOfUniverse][sizeOfUniverse];
         for (int i = 0; i < sizeOfUniverse; i++) {
             for (int j = 0; j < sizeOfUniverse; j++) {
                 universeMatrix[i][j] = random.nextBoolean();
+                if (universeMatrix[i][j]) {
+                    numberOfAliveCells++;
+                }
             }
         }
     }
@@ -22,6 +26,14 @@ public class Universe {
 
     public void setUniverseMatrix(boolean[][] matrix) {
         universeMatrix = matrix;
+    }
+
+    public int getNumberOfAliveCells() {
+        return numberOfAliveCells;
+    }
+
+    public void setNumberOfAliveCells(int number) {
+        this.numberOfAliveCells = number;
     }
 
     @Override

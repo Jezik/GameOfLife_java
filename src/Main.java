@@ -1,17 +1,26 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Scanner scanner = new Scanner(System.in);
         int size = scanner.nextInt();
-        int seed = scanner.nextInt();
-        int steps = scanner.nextInt(); // Represents steps from the initial state of universe to output according to the task
 
-        Universe universe = new Universe(size, seed);
-        for (int i = 0; i < steps; i++) {
+        Universe universe = new Universe(size);
+        for (int i = 0; i < 10; i++) {
+            System.out.println("Generation #" + (i+1));
+            System.out.println("Alive: " + universe.getNumberOfAliveCells());
+            System.out.print(universe.toString());
+            Thread.sleep(1000);
+            try {
+                if (System.getProperty("os.name").contains("Windows"))
+                    new ProcessBuilder("cmd","/c","cls").inheritIO().start().waitFor();
+                else
+                    Runtime.getRuntime().exec("clear");
+            }
+            catch (IOException | InterruptedException e) {}
             universe.setUniverseMatrix(Utility.createNextGeneration(universe.getUniverseMatrix()));
+            universe.setNumberOfAliveCells(Utility.numberOfAliveCells);
         }
-
-        System.out.print(universe.toString());
     }
 }

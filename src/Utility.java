@@ -6,12 +6,17 @@
  */
 
 public class Utility {
+    public static int numberOfAliveCells;
 
     public static boolean[][] createNextGeneration(boolean[][] matrix) {
+        numberOfAliveCells = 0;
         boolean[][] nextGenerationMatrix = new boolean[matrix.length][matrix[0].length];
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 nextGenerationMatrix[i][j] = isAliveCell(getNeighbours(matrix, i, j), matrix[i][j]);
+                if (nextGenerationMatrix[i][j]) {
+                    numberOfAliveCells++;
+                }
             }
         }
 
